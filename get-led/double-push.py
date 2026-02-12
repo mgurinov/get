@@ -20,18 +20,19 @@ GPIO.setup(down, GPIO.IN)
 num = 0
 sleep_time = 0.2
 while True:
-    if GPIO.input(up):
+    if GPIO.input(up) and GPIO.input(down):
+        num = 255
+        time.sleep(sleep_time)
+    elif GPIO.input(up):
         num = num + 1
         if num > 255:
             num = 0
         print(num, dec2bin(num))
         time.sleep(sleep_time)
-    if GPIO.input(down):
+    elif GPIO.input(down):
         num = num - 1
         if num < 0:
             num = 255
         print(num, dec2bin(num))
         time.sleep(sleep_time)
-    if GPIO.input(up) and GPIO.input(down):
-        num = 255
     GPIO.output(leds, dec2bin(num))
